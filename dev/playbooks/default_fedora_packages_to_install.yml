@@ -1,0 +1,45 @@
+---
+
+packages_to_install:
+    - "@Development Libraries"
+    - aria2
+    - automake
+    - gcc
+    - gcc-c++
+    - kernel-devel
+    - diffstat
+    - doxygen
+    - patch
+    - patchutils
+    - colordiff
+    - meld
+    - qgit
+    - cheese
+    - cmake
+    - curl
+    - gettext
+    - gimp
+    - gparted
+    - graphviz-devel
+    - htop
+    - imagemagick
+    - inkscape
+    - libmemcached-devel
+    - libwebp-devel
+    - lynx
+    - macchanger
+    - p7zip
+    - python3-devel
+    - python-devel
+    - unetbootin
+    - vlc
+    - wget
+    - xclip
+    - xml2
+    - zlib-devel
+    - libffi-devel
+    - openssl-devel
+    - pidgin
+    - docker
+
+

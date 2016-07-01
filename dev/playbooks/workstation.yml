@@ -1,0 +1,11 @@
+
+- hosts:
+    - home
+
+  vars_files:
+    - "default_fedora_packages_to_install.yml"
+
+  roles:
+    - fedora-common-packages
+    - { role: git, git_full_name: "Your Name", git_email: "Your Email"}
+    - { role: pycharm, pycharm_version: "professional", pycharm_release_number: "2016.1.2" }
