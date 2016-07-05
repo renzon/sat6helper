@@ -1,5 +1,5 @@
 - name: update packages cache
-  yum: update_cache=yes
+  yum: name=yum update_cache=yes
   become: yes
   become_method: sudo
 

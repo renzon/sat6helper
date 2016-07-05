@@ -3,7 +3,7 @@
   register: pycharm_directory_exists
 
 - name: ensure aria2 download manager is installed
-  yum: name=aria2 state=present update_cache=yes cache_valid_time=300
+  yum: name=aria2 state=present update_cache=yes
   become: yes
   become_method: sudo
 

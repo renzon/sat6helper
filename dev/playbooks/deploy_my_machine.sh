@@ -45,8 +45,7 @@ function read_secret()
 
 function install_ansible_and_other_required_tools(){
     sudo -S <<< "$user_passwd" dnf update -y
-    sudo -S <<< "$user_passwd" dnf install -y python2
-    sudo -S <<< "$user_passwd" dnf install -y wget unzip python-devel
+    sudo -S <<< "$user_passwd" dnf install -y wget unzip python2 python-devel libffi-devel redhat-rpm-config openssl-devel yum
 
     is_python2_pip=$(pip --version | grep 2.7 &> /dev/null && echo 'yes' || echo 'no')
     if [ "$is_python2_pip" = "no" ]; then
@@ -73,12 +72,11 @@ function run_playbook(){
     cd /tmp/deploy_my_machine || exit
     wget -O $file_full_output_path "$repo_zip_package_url"
 
-    unzip $playbooks_repro_name
+    unzip $playbooks_repo_name
     cd "$playbooks_repo_name-master" || exit
-    
-    sudo -H -S <<< "$user_passwd" killall update-notifier > /dev/null
-    sudo -H -S <<< "$user_passwd" rm /var/lib/dpkg/lock > /dev/null
+
     echo "running playbook"
+    cd dev/playbooks
     ansible-playbook workstation.yml --extra-vars "ansible_become_pass=$user_passwd"
     cd $current_directory
     rm -r /tmp/deploy_my_machine 2> /dev/null 

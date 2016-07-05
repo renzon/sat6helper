@@ -22,7 +22,7 @@ packages_to_install:
     - gparted
     - graphviz-devel
     - htop
-    - imagemagick
+    - ImageMagick
     - inkscape
     - libmemcached-devel
     - libwebp-devel
@@ -32,7 +32,6 @@ packages_to_install:
     - python3-devel
     - python-devel
     - unetbootin
-    - vlc
     - wget
     - xclip
     - xml2
@@ -41,5 +40,6 @@ packages_to_install:
     - openssl-devel
     - pidgin
     - docker
+    - libselinux-python
 
 
