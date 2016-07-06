@@ -42,5 +42,5 @@ packages_to_install:
     - docker
     - libselinux-python
     - python-dnf
-
-
+    - python-virtualenv
+    - python-virtualenvwrapper

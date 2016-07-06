@@ -1,0 +1,4 @@
+- name: ensure if {{ projects_folder }} directory exists
+  file: path={{ projects_folder }} state=directory mode=0755
+  register: projects_exists
+  tags: project_folder

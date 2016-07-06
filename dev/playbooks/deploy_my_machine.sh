@@ -44,7 +44,9 @@ function read_other_data()
    read -p "Your github username ex: $current_user:" git_username
    read -p "Your git full name ex: Homer Simpsons:" git_full_name
    read -p "Your github email ex: $current_user@mail.com:" git_email
+   read -p "Your projects folder (default is ~/Projects):" projects_folder
    read -p "Roles to skip ex: pycharm,git,vlc or just [enter] to install all roles.:" skip_tags
+   read -p "Ansible debug level -v, -vv, -vvv or -vvvv [enter] to -v:" debug_level
 
 }
 
@@ -89,10 +91,13 @@ function run_playbook(){
 
     echo "running playbook"
     cd dev/playbooks
-    ansible-playbook workstation.yml \
+    ansible-playbook \
+      ${debug_level:--v} \
+      workstation.yml \
       --skip-tags ${skip_tags:-notags} \
       --extra-vars \
       "ansible_become_pass=$user_passwd
+       projects_folder=${projects_folder:-$HOME/Projects}
        git_username=${git_username:-$current_user}
        git_email=${git_email:-$current_user@mail.com}
        git_full_name='${git_full_name:-$current_user}'"
