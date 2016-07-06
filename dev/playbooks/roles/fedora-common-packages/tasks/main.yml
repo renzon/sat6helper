@@ -2,14 +2,17 @@
   shell: "{{ ansible_pkg_mgr }} -y update"
   become: yes
   become_method: sudo
+  tags: packages
 
 - name: upgrade all packages
   package: name=* state=latest
   become: yes
   become_method: sudo
+  tags: packages
 
 - name: ensure package list is installed
   package: name={{ item }} state=present
   become: yes
   become_method: sudo
   with_items: "{{ packages_to_install }}"
+  tags: packages
