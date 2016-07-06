@@ -5,6 +5,7 @@ set -euo pipefail
 # http://stackoverflow.com/a/2654048/2975300
 # http://stackoverflow.com/a/28393320/2975300
 
+skip_tags="notag"
 github_username="SatelliteQE"
 playbooks_repo_name="sat6helper"
 
@@ -44,10 +45,10 @@ function read_secret()
 function read_other_data()
 {
    # get github data
-   read -p "Your github username ex: $current_user": git_username
-   read -p "Your git full name ex: Homer Simpsons": git_full_name
-   read -p "Your github email ex: $current_user@mail.com": git_email
-   read -p "Roles to skip ex: pycharm,git,vlc or just [enter] to install all roles.": skip_tags
+   read -p "Your github username ex: $current_user:" git_username
+   read -p "Your git full name ex: Homer Simpsons:" git_full_name
+   read -p "Your github email ex: $current_user@mail.com:" git_email
+   read -p "Roles to skip ex: pycharm,git,vlc or just [enter] to install all roles.:" skip_tags
 
 }
 
@@ -92,7 +93,13 @@ function run_playbook(){
 
     echo "running playbook"
     cd dev/playbooks
-    ansible-playbook workstation.yml --extra-vars "ansible_become_pass=$user_passwd"
+    ansible-playbook workstation.yml \
+      --skip-tags ${skip_tags:-notags} \
+      --extra-vars \
+      "ansible_become_pass=$user_passwd
+       git_username=${git_username:-$current_user}
+       git_email=${git_email:-$current_user@mail.com}
+       git_full_name='${git_full_name:-$current_user}'"
     cd $current_directory
     rm -r /tmp/deploy_my_machine 2> /dev/null 
 }
