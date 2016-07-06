@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# http://unix.stackexchange.com/questions/10922/temporarily-suspend-bash-history-on-a-given-shell
-# http://stackoverflow.com/a/2654048/2975300
-# http://stackoverflow.com/a/28393320/2975300
-
 skip_tags="notag"
 github_username="SatelliteQE"
 playbooks_repo_name="sat6helper"
