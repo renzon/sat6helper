@@ -41,5 +41,6 @@ packages_to_install:
     - pidgin
     - docker
     - libselinux-python
+    - python-dnf
 
 

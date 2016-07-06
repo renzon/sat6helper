@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-# usage:
+set -euo pipefail
+
 # http://unix.stackexchange.com/questions/10922/temporarily-suspend-bash-history-on-a-given-shell
-
 # http://stackoverflow.com/a/2654048/2975300
-
 # http://stackoverflow.com/a/28393320/2975300
 
 github_username="SatelliteQE"
@@ -45,7 +44,7 @@ function read_secret()
 
 function install_ansible_and_other_required_tools(){
     sudo -S <<< "$user_passwd" dnf update -y
-    sudo -S <<< "$user_passwd" dnf install -y wget unzip python2 python-devel libffi-devel redhat-rpm-config openssl-devel yum
+    sudo -S <<< "$user_passwd" dnf install -y wget unzip python2 python-devel libffi-devel redhat-rpm-config openssl-devel yum python-dnf
 
     is_python2_pip=$(pip --version | grep 2.7 &> /dev/null && echo 'yes' || echo 'no')
     if [ "$is_python2_pip" = "no" ]; then

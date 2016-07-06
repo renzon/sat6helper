@@ -3,7 +3,7 @@
   register: pycharm_directory_exists
 
 - name: ensure aria2 download manager is installed
-  yum: name=aria2 state=present update_cache=yes
+  package: name=aria2 state=present
   become: yes
   become_method: sudo
 
@@ -15,7 +15,7 @@
 
 - name: ensure pycharm is installed
   unarchive: src={{ ansible_env.HOME }}/binaries/pycharm/pycharm-{{ pycharm_version }}-{{ pycharm_release_number }}.tar.gz dest={{ ansible_env.HOME }}/binaries/pycharm copy=no
-#  when: pycharm_directory_exists | changed
+  when: pycharm_directory_exists | changed
   register: pycharm_extracted
 
 
@@ -25,4 +25,4 @@
 
 - name: ensure pycharm launcher is installed
   template: src=jetbrains-pycharm.desktop.j2 dest={{ ansible_env.HOME }}/.local/share/applications/jetbrains-pycharm.desktop
-#  when: pycharm_extracted | changed and applications_exists | changed
+  when: pycharm_extracted | changed and applications_exists | changed

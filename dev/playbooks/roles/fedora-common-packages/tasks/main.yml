@@ -1,15 +1,15 @@
 - name: update packages cache
-  yum: name=yum update_cache=yes
+  shell: "{{ ansible_pkg_mgr }} -y update"
   become: yes
   become_method: sudo
 
 - name: upgrade all packages
-  yum: name=* state=latest
+  package: name=* state=latest
   become: yes
   become_method: sudo
 
 - name: ensure package list is installed
-  yum: name={{ item }} state=present
+  package: name={{ item }} state=present
   become: yes
   become_method: sudo
   with_items: "{{ packages_to_install }}"

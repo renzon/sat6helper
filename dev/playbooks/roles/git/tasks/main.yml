@@ -1,5 +1,5 @@
 - name: ensure git is installed
-  yum: name=git state=present
+  package: name=git state=present
   become: yes
   become_method: sudo
 
