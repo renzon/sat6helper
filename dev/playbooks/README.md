@@ -1,10 +1,21 @@
 SatelliteQE Dev Environment Playbooks
 =====================================
 
-The ansible playbooks to deploy Fedora 23 development machine
+The ansible playbooks to deploy Fedora 23/24 development machine
 
 install
 --------------
+
+### auto
+
+```bash
+wget -O /tmp/deploy_my_machine.sh https://raw.githubusercontent.com/SatelliteQE/sat6helper/master/dev/playbooks/deploy_my_machine.sh && . /tmp/deploy_my_machine.sh
+
+```
+
+> Note: if you use auto you'll need to reconfigure github repo origin and upstream remotes.
+
+### manual
 
 Install Ansible
 

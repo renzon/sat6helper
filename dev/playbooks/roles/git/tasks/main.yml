@@ -1,7 +1,9 @@
 - name: ensure git is installed
-  yum: name=git state=present
+  package: name=git state=present
   become: yes
   become_method: sudo
+  tags: git
 
 - name: be sure git is configured
   template: src=gitconfig.j2 dest={{ ansible_env.HOME }}/.gitconfig owner={{ ansible_user_id }}
+  tags: git
