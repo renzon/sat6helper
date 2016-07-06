@@ -41,11 +41,24 @@ function read_secret()
     echo
 }
 
+function read_other_data()
+{
+   # get github data
+   read -p "Your github username ex: $current_user": git_username
+   read -p "Your git full name ex: Homer Simpsons": git_full_name
+   read -p "Your github email ex: $current_user@mail.com": git_email
+   read -p "Roles to skip ex: pycharm,git,vlc or just [enter] to install all roles.": skip_tags
+
+}
+
 
 function install_ansible_and_other_required_tools(){
     sudo -S <<< "$user_passwd" dnf update -y
-    sudo -S <<< "$user_passwd" dnf install -y wget unzip python2 python-devel libffi-devel redhat-rpm-config openssl-devel yum python-dnf
+    sudo -S <<< "$user_passwd" dnf install -y wget unzip python2 python-devel
+    sudo -S <<< "$user_passwd" dnf install -y libffi-devel redhat-rpm-config
+    sudo -S <<< "$user_passwd" dnf install -y openssl-devel yum python-dnf
 
+    echo "checking if Python is installed"
     is_python2_pip=$(pip --version | grep 2.7 &> /dev/null && echo 'yes' || echo 'no')
     if [ "$is_python2_pip" = "no" ]; then
       echo "pip to Python2 is not installed. installing now"
@@ -53,22 +66,25 @@ function install_ansible_and_other_required_tools(){
       sudo -H -S <<< "$user_passwd" python2 /tmp/get-pip.py -U
     fi
     
-    
+    echo "checking if ansible is newer version"
     is_ansible_old_version=$(ansible --version | grep " 2." &> /dev/null && echo 'no' || echo 'yes')
     if [ "$is_ansible_old_version" = "yes" ]; then
+        echo "upgrading ansible"
         sudo -H -S <<< "$user_passwd" pip install ansible -U
     fi
     
-
 }
 
 function run_playbook(){
+    echo "preparing to run the playbook"
     local file_name="$playbooks_repo_name.zip"
     local file_full_output_path="/tmp/deploy_my_machine/$file_name"
     cd /tmp || exit
-    sudo -H -S <<< "$user_passwd" rm -r /tmp/deploy_my_machine 2> /dev/null 
+    sudo -H -S <<< "$user_passwd" rm -rf /tmp/deploy_my_machine 2> /dev/null
+
     mkdir -p /tmp/deploy_my_machine
     cd /tmp/deploy_my_machine || exit
+    echo "downloading repository files"
     wget -O $file_full_output_path "$repo_zip_package_url"
 
     unzip $playbooks_repo_name
@@ -89,10 +105,12 @@ if [[ $EUID -ne 0 ]]; then
     
     # read current user password
     read_secret
+
+    read_other_data
     
     # install ansible, wget and unzip
     install_ansible_and_other_required_tools
-    
+
     run_playbook
     
     unset user_passwd
