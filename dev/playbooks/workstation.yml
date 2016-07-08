@@ -2,10 +2,22 @@
 - hosts:
     - home
 
+  vars:
+    projects_folder: '{{ ansible_env.HOME }}/Projects'
+    virtualenv_path: '{{ ansible_env.HOME }}/.virtualenvs'
+    git_username: SatelliteQE
+    git_email: Your Email
+    git_full_name: Your Name
+    pycharm_version: professional
+    pycharm_release_number: "2016.1.2"
+
+
   vars_files:
     - "default_fedora_packages_to_install.yml"
 
   roles:
+    - projects_directory
     - fedora-common-packages
-    - { role: git, git_full_name: "Your Name", git_email: "Your Email"}
-    - { role: pycharm, pycharm_version: "professional", pycharm_release_number: "2016.1.2" }
+    - git
+    - pycharm
+    - robottelo

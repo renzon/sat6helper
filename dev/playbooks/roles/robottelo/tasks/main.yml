@@ -1,0 +1,25 @@
+- name: Clone robottelo
+  tags: robottelo
+  git:
+    repo: ssh://git@github.com/{{ git_username }}/robottelo.git
+    dest: "{{ projects_folder}}/robottelo"
+    accept_hostkey: true
+
+- name: Create Robottelo virtualenv
+  tags: robottelo
+  pip:
+    chdir: "{{ projects_folder}}/robottelo/"
+    requirements: "{{ projects_folder}}/robottelo/requirements.txt"
+    virtualenv: "{{virtualenv_path}}/robottelo"
+
+
+- name: Install optional packages
+  tags: robottelo
+  pip:
+    requirements: "{{ projects_folder}}/robottelo/requirements-optional.txt"
+    virtualenv: "{{virtualenv_path}}/robottelo"
+
+- name: Copy properties file
+  tags: robottelo
+  shell: cp {{ projects_folder}}/robottelo/robottelo.properties.sample {{ projects_folder}}/robottelo/robottelo.properties
+
